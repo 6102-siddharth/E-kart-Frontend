@@ -4,6 +4,8 @@ import { useLocation } from 'react-router-dom';
 import CameraCard from './CameraCard';
 import { auth } from '../firebaseConfig';
 
+
+
 function ExplorePage() {
   const [cameras, setCameras] = useState([]);
   const [query, setQuery] = useState(null)
@@ -21,7 +23,7 @@ function ExplorePage() {
         setLoading(true);
         // Get search query from URL
        
-        const response = await axios.get('http://localhost:5000/api/cameras');
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/cameras`);
         setCameras(response.data);
         setFilteredCameras(response.data);
       } catch (err) {
@@ -37,6 +39,10 @@ function ExplorePage() {
     });
     return () => unsubscribe();
   }, [location.search]);
+  useEffect(()=>{
+    console.log("Backend url = " +import.meta.env.VITE_BACKEND_URL);
+    
+  },[])
 
 
 
