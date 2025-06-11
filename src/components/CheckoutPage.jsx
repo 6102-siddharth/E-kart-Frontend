@@ -65,7 +65,7 @@ function CheckoutPage() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/orders",
+       `${import.meta.env.VITE_BACKEND_URL}/api/orders`,
         orderDetails
       ); // Backend API endpoint
       setSuccessMessage(response.data.message);

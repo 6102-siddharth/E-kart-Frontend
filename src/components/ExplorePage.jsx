@@ -5,7 +5,6 @@ import CameraCard from './CameraCard';
 import { auth } from '../firebaseConfig';
 
 
-
 function ExplorePage() {
   const [cameras, setCameras] = useState([]);
   const [query, setQuery] = useState(null)
@@ -39,12 +38,6 @@ function ExplorePage() {
     });
     return () => unsubscribe();
   }, [location.search]);
-  useEffect(()=>{
-    console.log("Backend url = " +import.meta.env.VITE_BACKEND_URL);
-    
-  },[])
-
-
 
 
   // Handle price filter and sorting

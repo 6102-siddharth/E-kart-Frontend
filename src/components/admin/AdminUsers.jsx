@@ -15,7 +15,7 @@ function AdminUsers() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
 
-    const API_URL = "http://localhost:5000/api/admin/users";
+    const API_URL = `${import.meta.env.VITE_BACKEND_URL}/api/admin/users`;
 
     useEffect(() => {
         const fetchUsers = async () => {

@@ -97,7 +97,7 @@ const HomePage = () => {
                 <h3 className="text-lg font-semibold text-gray-800">{product.name}</h3>
                 <p className="text-sm text-gray-600 mb-2">{product.specs}</p>
                 <div className="flex justify-between items-center">
-                  <span className="text-lg font-bold text-blue-600">${product.price}</span>
+                  <span className="text-lg font-bold text-blue-600">₹{product.price}</span>
                   <Link to={`/product/${product.id}`}>
                     <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition-colors duration-300">
                       View Details

@@ -81,7 +81,7 @@ function AdminProducts() {
     const [showModal, setShowModal] = useState(false);
     const [editingProduct, setEditingProduct] = useState(null); // null for new, product object for edit
 
-    const API_URL = "http://localhost:5000/api/cameras";
+    const API_URL = `${import.meta.env.VITE_BACKEND_URL}/api/cameras`;
 
     const fetchProducts = async () => {
         setIsLoading(true);

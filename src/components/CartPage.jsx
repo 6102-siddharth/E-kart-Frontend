@@ -77,7 +77,7 @@ function CartPage() {
                   />
                   <h3 className="font-semibold text-gray-800">{item.name}</h3>
                 </div>
-                <div className="text-gray-700">${item.price.toFixed(2)}</div>
+                <div className="text-gray-700">₹{item.price.toFixed(2)}</div>
                 <div className="flex items-center">
                   <input
                     type="number"
@@ -90,7 +90,7 @@ function CartPage() {
                   />
                 </div>
                 <div className="text-gray-700">
-                  ${(item.price * item.quantity).toFixed(2)}
+                  ₹{(item.price * item.quantity).toFixed(2)}
                 </div>
                 <div>
                   <button
@@ -110,7 +110,7 @@ function CartPage() {
         <div className="flex flex-col md:flex-row justify-between items-center bg-white rounded-lg shadow-md p-6">
           <div className="mb-4 md:mb-0">
             <h4 className="text-xl font-bold text-gray-800">
-              Total: ${totalAmount.toFixed(2)}
+              Total: ₹{totalAmount.toFixed(2)}
             </h4>
           </div>
           <div className="flex gap-4">

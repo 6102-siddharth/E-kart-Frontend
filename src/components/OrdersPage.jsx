@@ -206,7 +206,7 @@ function OrdersPage() {
                             {item.quantity}
                           </p>
                           <p className="text-gray-600 text-sm">
-                            <span className="font-semibold">Price:</span> $
+                            <span className="font-semibold">Price:</span> ₹
                             {item.price.toFixed(2)}
                           </p>
                         </div>
@@ -216,7 +216,7 @@ function OrdersPage() {
                 </div>
                 <div className="mt-6 flex justify-between items-center">
                   <p className="text-lg font-semibold text-gray-800">
-                    Total: ${order.totalAmount?.toFixed(2) || 'N/A'}
+                    Total: ₹{order.totalAmount?.toFixed(2) || 'N/A'}
                   </p>
                   {(order.status === 'Pending' || order.status === 'Processing') && (
                     <button

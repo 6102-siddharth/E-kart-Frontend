@@ -15,7 +15,7 @@ function AdminOrders() {
   const authToken = adminAuth ? adminAuth.authToken : null;
     const currentUser = adminAuth ? adminAuth.currentUser : null;
 
-    const API_URL = "http://localhost:5000/api/orders/admin";
+    const API_URL = `${import.meta.env.VITE_BACKEND_URL}/api/orders/admin`;
     const ORDER_STATUSES = ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled']; // Example statuses
 
     const fetchOrders = async () => {

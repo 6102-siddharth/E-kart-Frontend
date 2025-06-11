@@ -31,7 +31,7 @@ function CameraCard({ camera, user }) {
     <h3 className="text-lg font-semibold text-gray-800">{camera.name}</h3>
     <p className="text-sm text-gray-600 mb-2">{camera.specs}</p>
     <div className="flex justify-between items-center">
-    <span className="text-lg font-bold text-blue-600">${camera.price}</span>
+    <span className="text-lg font-bold text-blue-600">₹{camera.price}</span>
     </div>
     <div className="flex justify-between items-center">
       <Link to={`/product/${camera.id}`}>
