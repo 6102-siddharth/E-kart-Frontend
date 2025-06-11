@@ -12,7 +12,7 @@ const HomePage = () => {
     const fetchCameras = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:5000/api/cameras');
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/cameras`);
         // Assuming the API supports a query for featured products or limit to 3
         setFeaturedProducts(response.data.slice(0, 3)); // Limit to 3 for homepage
       } catch (err) {
