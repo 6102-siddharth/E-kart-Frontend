@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+//All images path
+import available from '../assets/available.jpg';
+import warrenty from '../assets/warrenty.jpg';
+import securepay from '../assets/securepay.jpg'
+ 
 const HomePage = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -144,9 +149,9 @@ const HomePage = () => {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <div className="p-4">
             <img
-              src="/images/warranty-icon.png"
+              src={warrenty}
               alt="Warranty Icon"
-              className="w-16 h-16 mx-auto mb-4"
+              className="w-25 h-25 mx-auto mb-4"
               loading="lazy"
             />
             <h3 className="text-xl font-semibold text-gray-800">2-Year Warranty</h3>
@@ -154,9 +159,9 @@ const HomePage = () => {
           </div>
           <div className="p-4">
             <img
-              src="/images/secure-icon.png"
+              src= {securepay}
               alt="Secure Payments Icon"
-              className="w-16 h-16 mx-auto mb-4"
+              className="w-25 h-25 mx-auto mb-4"
               loading="lazy"
             />
             <h3 className="text-xl font-semibold text-gray-800">Secure Payments</h3>
@@ -164,9 +169,9 @@ const HomePage = () => {
           </div>
           <div className="p-4">
             <img
-              src="/images/support-icon.png"
+              src={available}
               alt="Support Icon"
-              className="w-16 h-16 mx-auto mb-4"
+              className="w-25 h-25 mx-auto mb-4"
               loading="lazy"
             />
             <h3 className="text-xl font-semibold text-gray-800">24/7 Support</h3>

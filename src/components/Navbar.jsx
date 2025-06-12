@@ -6,6 +6,8 @@ import { CartContext } from '../contexts/CartContext';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import logo from '../assets/logo.jpg'; // company logo
+
 function Navbar() {
   const [currentUser, setCurrentUser] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -54,9 +56,9 @@ function Navbar() {
         {/* Logo */}
         <Link to="/" className="flex items-center">
           <img
-            src="/images/logo.png"
+            src={logo}
             alt="CCTV Camera Store Logo"
-            className="h-10 w-auto"
+            className="h-20 w-auto"
             loading="lazy"
           />
           <span className="ml-2 text-xl font-bold text-gray-800 hidden md:block">
