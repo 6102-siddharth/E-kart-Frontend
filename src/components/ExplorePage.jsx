@@ -13,7 +13,7 @@ function ExplorePage() {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sortOption, setSortOption] = useState('default');
-  const [priceFilter, setPriceFilter] = useState([0, 500]);
+  const [priceFilter, setPriceFilter] = useState([0, 50000]);
   const location = useLocation();
 
   useEffect(() => {  

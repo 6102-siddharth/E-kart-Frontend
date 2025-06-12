@@ -67,7 +67,7 @@ function Navbar() {
         </Link>
 
         {/* Search Bar (Desktop) */}
-        <div className="hidden md:flex flex-1 mx-4">
+        <div className="hidden md:flex mx-4 lg:w-[600px]">
           <input
             type="text"
             placeholder="Search cameras..."
