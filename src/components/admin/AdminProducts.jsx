@@ -214,7 +214,7 @@ function AdminProducts() {
                                     <p className="text-gray-900 whitespace-no-wrap">{product.category}</p>
                                 </td>
                                 <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
-                                    <p className="text-gray-900 whitespace-no-wrap">${parseFloat(product.price).toFixed(2)}</p>
+                                    <p className="text-gray-900 whitespace-no-wrap">₹{parseFloat(product.price).toFixed(2)}</p> 
                                 </td>
                                 <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
                                     <p className="text-gray-900 whitespace-no-wrap">{product.stock}</p>
