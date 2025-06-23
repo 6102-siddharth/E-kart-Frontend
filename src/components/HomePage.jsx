@@ -185,13 +185,10 @@ const HomePage = () => {
         <div className="container mx-auto text-center">
           <p className="mb-4">CCTV Camera Store © 2025. All rights reserved.</p>
           <div className="flex justify-center gap-4">
-            <Link to="/about" className="hover:text-orange-500 transition-colors">
-              About Us
-            </Link>
             <Link to="/contact" className="hover:text-orange-500 transition-colors">
               Contact
             </Link>
-            <Link to="/privacy" className="hover:text-orange-500 transition-colors">
+            <Link to="/Terms" className="hover:text-orange-500 transition-colors">
               Privacy Policy
             </Link>
           </div>

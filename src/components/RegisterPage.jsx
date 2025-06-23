@@ -26,9 +26,9 @@ function RegisterPage() {
 
       // Store additional user data in Firestore
       await setDoc(doc(db, "users", user.uid), {
-        email: email, // **Corrected: Using state variable 'email'**
-        phone: phone, // **Corrected: Using state variable 'phone'**
-        address: address, // **Corrected: Using state variable 'address'**
+        email: email, // *Corrected: Using state variable 'email'*
+        phone: phone, // *Corrected: Using state variable 'phone'*
+        address: address, // *Corrected: Using state variable 'address'*
       });
 
       setSuccessMessage("Registration successful!");
@@ -39,10 +39,10 @@ function RegisterPage() {
     }
   };
   return (
-    <div className="container mx-auto py-8">
- 
+            <div className="max-h-screen flex items-center justify-center bg-gray-100 py-18 px-4 sm:px-6 lg:px-8">
+    <div className="container mx-auto py-8 max-w-md  space-y-8 bg-white p-10 rounded-xl shadow-lg">
       {/* Container and padding */}
-      <h2 className="text-2xl font-bold mb-4">Register</h2>{" "}
+      <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
       {/* Heading style */}
       {successMessage && (
         <p className="text-green-500 mb-2">{successMessage}</p>
@@ -126,7 +126,7 @@ function RegisterPage() {
           Register
         </button>
       </form>
-    </div>
+    </div></div>
   );
 }
 

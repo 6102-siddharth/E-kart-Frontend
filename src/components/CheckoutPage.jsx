@@ -1,153 +1,151 @@
-import React, { useState, useEffect } from "react";
-import { auth } from "../firebaseConfig"; // Firebase Auth
-import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom"; // For redirection
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { CartContext } from '../contexts/CartContext'; // Adjust path
+import { auth } from '../firebaseConfig'; 
+import { useEffect } from 'react';
 
 function CheckoutPage() {
-  const location = useLocation();
-
-  // Assume cartItems are passed as props
-  const [address, setAddress] = useState("");
-  const [mobileNo, setMobileNo] = useState("");
-  const [name, setName] = useState("");
-  const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
-  const [uid, setUid] = useState(null); // State to store user UID
+  // 1. Get data from contexts - This is the modern React way
+  const { cartItems, getCartTotal, clearCart } = useContext(CartContext);
   const navigate = useNavigate();
 
-  console.log("CheckoutPage - location.state:", location.state);
-  const cartItems = location.state?.cartItems || [];
-  console.log("CheckoutPage - cartItems:", cartItems);
+  // 2. State for the form, loading, and errors
+  const [name1, setName1] = useState('');
+  const [currentUser, setCurrentUser] = useState();
+  const [mobileNo, setMobileNo] = useState('');
+  const [address, setAddress] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  useEffect(() => {
-    // Get current user UID when component mounts
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUid(user.uid);
-        console.log(cartItems);
-      } else {
-        // No user logged in, maybe redirect to login page
-        console.log("No user logged in, redirecting to login");
-        navigate("/login"); // Redirect to login page if not logged in
-      }
-    });
-
-    return () => unsubscribe(); // Unsubscribe on unmount
-  }, [navigate]);
+   useEffect(() => {
+      const unsubscribe = auth.onAuthStateChanged((user) => {
+        setCurrentUser(user);
+      });
+      return () => unsubscribe();
+    }, []);
+  
+  const totalAmount = getCartTotal();
 
   const handleCheckout = async (e) => {
     e.preventDefault();
-    setError("");
-    setSuccessMessage("");
-
-    if (!uid) {
-      setError("User not logged in. Please login to checkout.");
+    
+    // 3. Validation
+    if (!currentUser) {
+      setError('You must be logged in to proceed.');
+      navigate('/login'); // Redirect to login if not authenticated
       return;
     }
-
-    if (!cartItems || cartItems.length === 0) {
-      setError("Your cart is empty. Add items to checkout.");
+    if (!name1 || !mobileNo || !address) {
+      setError('Please fill in all required fields.'+name1+mobileNo+address);
       return;
     }
+    if (cartItems.length === 0) {
+        setError('Your cart is empty.');
+        return;
+    }
 
+    setIsLoading(true);
+    setError('');
+
+    // 4. Prepare order data for the backend
     const orderDetails = {
-      items: cartItems.map((item) => ({
-        cameraId: item.id,
-        quantity: item.quantity,
-      })), // Assuming cartItem has 'id' and 'quantity'
+      userId: currentUser.uid,
+      userEmail: currentUser.email,
+      items: cartItems, // Send the full item details for the order history
+      totalAmount: totalAmount,
       shippingAddress: address,
       userDetails: {
-        name: name,
+        name: name1,
         mobileNo: mobileNo,
       },
-      userId: uid, // Include UID in the order details
+      status: 'Pending', // Initial status
     };
 
     try {
+      // 5. Submit order to the backend
       const response = await axios.post(
-       `${import.meta.env.VITE_BACKEND_URL}/api/orders`,
+        'http://localhost:5000/api/orders',
         orderDetails
-      ); // Backend API endpoint
-      setSuccessMessage(response.data.message);
-      console.log("Order placed:", response.data);
-      // Optionally clear cart, redirect to order confirmation page etc.
-      // For now, just clear the form and show success message.
-      setAddress("");
-      setMobileNo("");
-      setName("");
-      // Redirect to order confirmation page if you create one
-      // navigate('/order-confirmation', { state: { orderId: response.data.orderId } });
+      );
+
+      // 6. Handle success: Clear cart and redirect
+      if (response.status === 201) {
+        clearCart(); // <--- THIS IS THE KEY STEP
+        navigate('/order-success', { state: { orderId: response.data.id } });
+      }
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to place order.");
-      console.error("Checkout error:", err);
+      setError(err.response?.data?.message || 'Failed to place order. Please try again.');
+      console.error('Checkout error:', err);
+    } finally {
+      // 7. Always stop loading state
+      setIsLoading(false);
     }
   };
+  
+  // If cart is empty, don't show the form.
+  if (cartItems.length === 0) {
+    return (
+      <div className="container mx-auto py-12 text-center">
+        <h2 className="text-2xl font-bold mb-4">Your cart is empty.</h2>
+        <p className="text-gray-600">Please add items to your cart before proceeding to checkout.</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="container mx-auto py-8">
-      <h2 className="text-2xl font-bold mb-4">Checkout</h2>
-      {successMessage && (
-        <p className="text-green-500 mb-2">{successMessage}</p>
-      )}
-      {error && <p className="text-red-500 mb-2">Error: {error}</p>}
+    <div className="font-sans bg-gray-100 min-h-screen py-12">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold text-gray-800 text-center mb-8">Checkout</h2>
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row-reverse gap-8">
+          
+          {/* Order Summary */}
+          <div className="md:w-2/5 bg-white p-6 rounded-lg shadow-md h-fit">
+            <h3 className="text-xl font-bold border-b pb-4 mb-4">Your Order</h3>
+            {cartItems.map(item => (
+                <div key={item.id} className="flex justify-between items-center mb-3 text-sm">
+                    <span className="text-gray-600">{item.name} <span className="text-xs">x {item.quantity}</span></span>
+                    <span className='font-medium text-gray-800'>₹{(item.price * item.quantity).toFixed(2)}</span>
+                </div>
+            ))}
+            <div className="border-t mt-4 pt-4 flex justify-between items-center font-bold text-lg">
+                <span className="text-gray-800">Total</span>
+                <span className="text-gray-900">₹{totalAmount.toFixed(2)}</span>
+            </div>
+          </div>
+          
+          {/* Checkout Form */}
+          <div className="md:w-3/5 bg-white p-6 rounded-lg shadow-md">
+            <form onSubmit={handleCheckout}>
+              <h3 className="text-xl font-bold mb-4">Shipping Details</h3>
+              <div className="grid grid-cols-1 gap-4">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                  <input type="text" id="name" value={name1} onChange={(e) => setName1(e.target.value)} required className="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+                <div>
+                  <label htmlFor="mobileNo" className="block text-sm font-medium text-gray-700 mb-1">Mobile No.</label>
+                  <input type="tel" id="mobileNo" value={mobileNo} onChange={(e) => setMobileNo(e.target.value)} required className="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+                <div>
+                  <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">Shipping Address</label>
+                  <textarea id="address" value={address} onChange={(e) => setAddress(e.target.value)} required rows="4" className="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+              </div>
+              
+              {error && <p className="text-red-500 bg-red-100 p-3 rounded mt-4 text-sm">{error}</p>}
 
-      <form onSubmit={handleCheckout} className="max-w-md mx-auto">
-        <div className="mb-4">
-          <label
-            htmlFor="name"
-            className="block text-gray-700 text-sm font-bold mb-2"
-          >
-            Name:
-          </label>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full mt-6 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg focus:outline-none focus:shadow-outline transition-colors duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
+              >
+                {isLoading ? 'Placing Order...' : `Place Order (₹${totalAmount.toFixed(2)})`}
+              </button>
+            </form>
+          </div>
         </div>
-        <div className="mb-4">
-          <label
-            htmlFor="mobileNo"
-            className="block text-gray-700 text-sm font-bold mb-2"
-          >
-            Mobile No:
-          </label>
-          <input
-            type="tel"
-            id="mobileNo"
-            value={mobileNo}
-            onChange={(e) => setMobileNo(e.target.value)}
-            required
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-        </div>
-        <div className="mb-6">
-          <label
-            htmlFor="address"
-            className="block text-gray-700 text-sm font-bold mb-2"
-          >
-            Shipping Address:
-          </label>
-          <textarea
-            id="address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            required
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            rows="4"
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        >
-          Checkout
-        </button>
-      </form>
+      </div>
     </div>
   );
 }

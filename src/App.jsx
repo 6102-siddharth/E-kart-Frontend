@@ -17,6 +17,10 @@ import AdminProducts from "./components/admin/AdminProducts";
 import AdminUsers from "./components/admin/AdminUsers";
 import AdminLayout from "./components/admin/AdminLayout";
 import AdminRoute from "./components/admin/AdminRoute";
+import ContactUs from "./components/Contact";
+import Terms from "./components/Terms";
+import OrderSuccessPage from "./components/OrderSuccess";
+
 
 import CameraDetail from "./components/CameraDeatil";
 function App() {
@@ -28,13 +32,18 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/login" element={<LoginPage2 />} />
+          <Route path="/login2" element={<LoginPage2 />} />
           <Route path="/explore" element={<ExplorePage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/orders" element={<OrdersPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/product/:id" element={<CameraDetail />} />
-          <Route path="/testRoute" element={<TestRoute />} />
+          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/Terms" element={<Terms />} /> 
+          <Route path="/order-success" element={<OrderSuccessPage />} />
+          <Route path="/testRoute" element={<ContactUs />} />
+
+          
            <Route element={<AdminRoute/>}>
           <Route  element={<AdminLayout/>}>
 

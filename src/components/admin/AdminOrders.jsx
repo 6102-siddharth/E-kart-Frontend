@@ -18,6 +18,24 @@ function AdminOrders() {
     const API_URL = `${import.meta.env.VITE_BACKEND_URL}/api/orders/admin`;
     const ORDER_STATUSES = ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled']; // Example statuses
 
+    const formatDate = (dateObject) => {
+        if (!dateObject) return 'N/A';
+        
+        // --- THIS IS THE MAIN FIX ---
+        // Check for the {_seconds, _nanoseconds} format from Firebase Admin SDK
+        if (dateObject._seconds) {
+            return new Date(dateObject._seconds * 1000).toLocaleDateString();
+        }
+
+        // Fallback for standard ISO strings or other date formats
+        const d = new Date(dateObject);
+        if (!isNaN(d.getTime())) {
+            return d.toLocaleDateString();
+        }
+
+        return 'Invalid Date';
+    };
+
     const fetchOrders = async () => {
         console.log("dada");
         
@@ -97,6 +115,7 @@ function AdminOrders() {
 
     if (isLoading) return <p className="text-gray-600">Loading orders...</p>;
 
+    
     return (
         <div>
             <h1 className="text-3xl font-bold mb-6 text-gray-800">Manage Orders</h1>
@@ -163,12 +182,13 @@ function AdminOrders() {
                                     <p className="text-gray-900 whitespace-no-wrap">{order.userEmail || order.userId?.substring(0,10)+'...' || 'N/A'}</p>
                                 </td>
                                 <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                    {/* --- FIX: Use the new helper function --- */}
                                     <p className="text-gray-900 whitespace-no-wrap">
-                                        {new Date(order.createdAt?.seconds ? order.createdAt.seconds * 1000 : order.createdAt).toLocaleDateString()}
+                                        {formatDate(order.orderDate)}
                                     </p>
                                 </td>
                                 <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
-                                    <p className="text-gray-900 whitespace-no-wrap">${parseFloat(order.totalAmount || 0).toFixed(2)}</p>
+                                    <p className="text-gray-900 whitespace-no-wrap">₹{parseFloat(order.totalAmount || 0).toFixed(2)}</p>
                                 </td>
                                 <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
