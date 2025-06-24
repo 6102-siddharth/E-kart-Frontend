@@ -309,7 +309,7 @@ function Navbar() {
               <>
                 <li>
                   <Link
-                    to="/login"
+                    to="/login2"
                     className="block text-gray-600 hover:text-blue-500 transition-colors duration-300"
                     onClick={toggleMenu}
                   >

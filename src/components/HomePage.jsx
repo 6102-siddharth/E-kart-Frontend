@@ -34,13 +34,19 @@ const HomePage = () => {
   const testimonials = [
     {
       id: 1,
-      name: 'John Doe',
+      name: 'Siddharth Vadgaonkar',
       text: 'Great quality cameras and excellent customer service!',
       rating: 5,
     },
     {
       id: 2,
-      name: 'Sarah Smith',
+      name: 'Prathmesh PAtil',
+      text: 'Easy to install and works perfectly for my home.',
+      rating: 4,
+    },
+     {
+      id: 3,
+      name: 'Vishvajeet chavan',
       text: 'Easy to install and works perfectly for my home.',
       rating: 4,
     },
