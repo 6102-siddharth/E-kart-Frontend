@@ -39,7 +39,7 @@ const Terms = () => {
         <h1 className="text-3xl font-bold text-gray-800 mb-2">Privacy Policy</h1>
         <p className="text-gray-600">Last updated: {new Date().toLocaleDateString()}</p>
         <p className="mt-4 text-gray-700">
-          At CameraHub, we are committed to protecting your privacy and ensuring the security of your personal information. 
+          At CCTV Camera Store, we are committed to protecting your privacy and ensuring the security of your personal information. 
           This policy explains how we collect, use, and safeguard your data when you use our camera inventory management system.
         </p>
       </div>
@@ -121,16 +121,16 @@ const Terms = () => {
           <li>Lodge complaints with relevant authorities</li>
         </ul>
         <p className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
-          To exercise these rights, contact us at <strong>privacy@camerahub.com</strong> or through your account settings.
+          To exercise these rights, contact us at <strong>cctvcamerastore@gmail.com</strong> or through your account settings.
         </p>
       </Section>
 
       <Section title="Contact Information" icon={FileText}>
         <p>For privacy-related questions or concerns:</p>
         <div className="bg-gray-50 p-4 rounded-lg mt-4">
-          <p><strong>Email:</strong> privacy@camerahub.com</p>
-          <p><strong>Phone:</strong> +1 (555) 123-4567</p>
-          <p><strong>Address:</strong> 123 Camera Street, Tech City, TC 12345</p>
+          <p><strong>Email:</strong> cctvcamerastore@gmail.com</p>
+          <p><strong>Phone:</strong> 7218140400</p>
+          <p><strong>Address:</strong> Miraj , Sangli</p>
         </div>
       </Section>
     </div>
@@ -142,14 +142,14 @@ const Terms = () => {
         <h1 className="text-3xl font-bold text-gray-800 mb-2">Terms & Conditions</h1>
         <p className="text-gray-600">Last updated: {new Date().toLocaleDateString()}</p>
         <p className="mt-4 text-gray-700">
-          These terms govern your use of CameraHub's inventory management system and e-commerce platform. 
+          These terms govern your use of CCTV Camera Store, inventory management system and e-commerce platform. 
           By using our services, you agree to these terms and conditions.
         </p>
       </div>
 
       <Section title="Acceptance of Terms" icon={FileText}>
         <p>
-          By accessing or using CameraHub's camera inventory management system, you acknowledge that you have read, 
+          By accessing or using CCTV Camera Store, camera inventory management system, you acknowledge that you have read, 
           understood, and agree to be bound by these Terms & Conditions. If you do not agree with any part of these terms, 
           you may not use our service.
         </p>
@@ -223,9 +223,9 @@ const Terms = () => {
       <Section title="Contact for Terms" icon={FileText}>
         <p>For questions about these terms:</p>
         <div className="bg-gray-50 p-4 rounded-lg mt-4">
-          <p><strong>Email:</strong> legal@camerahub.com</p>
-          <p><strong>Phone:</strong> +1 (555) 123-4567</p>
-          <p><strong>Business Hours:</strong> Monday-Friday, 9 AM - 6 PM EST</p>
+          <p><strong>Email:</strong> cctvcamerastore@gmail.com</p>
+          <p><strong>Phone:</strong> 7218140400</p>
+          <p><strong>Business Hours:</strong> Monday-Friday, 9 AM - 6 PM </p>
         </div>
       </Section>
     </div>
@@ -274,8 +274,8 @@ const Terms = () => {
             © 2025 CCTV CAMERA STORE. All rights reserved. | 
             
             <span className="ml-2">Questions?   <Link to="/contact" className="hover:text-orange-500 transition-colors">
-              Contact
-            </Link> us</span>
+              Contact-us
+            </Link> </span>
             
           </p>
         </div>

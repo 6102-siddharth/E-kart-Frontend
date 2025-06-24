@@ -40,7 +40,7 @@ function OrderSuccessPage() {
             Continue Shopping
           </Link>
           <Link
-            to="/profile/orders" // A link to where the user can see their order history
+            to="/orders" // A link to where the user can see their order history
             className="inline-block bg-gray-700 hover:bg-gray-800 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300"
           >
             View My Orders
