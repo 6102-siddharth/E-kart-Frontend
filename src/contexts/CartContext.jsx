@@ -2,6 +2,10 @@ import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { auth } from "../firebaseConfig"; // Import auth
 
+
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+
+
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
@@ -10,7 +14,7 @@ export const CartProvider = ({ children }) => {
   const fetchCartItems = async () => {
     try {
       const idToken = await auth.currentUser.getIdToken(); // Get Firebase ID token
-      const response = await axios.get("http://localhost:5000/api/cart", {
+      const response = await axios.get(`${API_BASE}/cart`, {  //.env path
         headers: { Authorization: `Bearer ${idToken}` }, // Send token in header
       });
       setCartItems(response.data); // Set cart items from API response
@@ -35,7 +39,7 @@ export const CartProvider = ({ children }) => {
     try {
       const idToken = await auth.currentUser.getIdToken();
       await axios.post(
-        "http://localhost:5000/api/cart/add",
+       `${API_BASE}/cart/add`,   // .env path
         {
           cameraId: camera.id,
           quantity: 1,
@@ -57,7 +61,7 @@ export const CartProvider = ({ children }) => {
   const removeFromCart = async (cameraId) => {
     try {
       const idToken = await auth.currentUser.getIdToken();
-      await axios.delete(`http://localhost:5000/api/cart/remove/${cameraId}`, {
+      await axios.delete(`${API_BASE}/cart/remove/${cameraId}`, {
         headers: { Authorization: `Bearer ${idToken}` },
       });
       await fetchCartItems(); // Re-fetch cart after removal
@@ -74,7 +78,7 @@ export const CartProvider = ({ children }) => {
     try {
       const idToken = await auth.currentUser.getIdToken();
       await axios.put(
-        "http://localhost:5000/api/cart/updateQuantity",
+        `${API_BASE}/cart/updateQuantity`,   //.env path
         {
           cameraId: cameraId,
           quantity: quantity,
@@ -93,7 +97,7 @@ export const CartProvider = ({ children }) => {
   const clearCart = async () => {
     try {
       const idToken = await auth.currentUser.getIdToken();
-      await axios.delete("http://localhost:5000/api/cart/clear", {
+      await axios.delete(`${API_BASE}/cart/clear`, {
         headers: { Authorization: `Bearer ${idToken}` },
       });
       await fetchCartItems(); // Re-fetch empty cart
@@ -114,7 +118,7 @@ export const CartProvider = ({ children }) => {
     try {
       const idToken = await auth.currentUser.getIdToken();
       const response = await axios.post(
-        "http://localhost:5000/api/orders",
+        `${API_BASE}/orders`, //.env path
         { cartItems },
         {
           headers: { Authorization: `Bearer ${idToken}` },
